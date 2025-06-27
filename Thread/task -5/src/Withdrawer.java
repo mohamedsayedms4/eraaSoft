@@ -1,21 +1,29 @@
+import java.util.Scanner;
+
 public class Withdrawer extends Thread {
-
     private BankAccount account;
-    private int amount;
+    private Scanner scanner;
+    private Object lock;
 
-    public Withdrawer(BankAccount account , int amount) {
+    public Withdrawer(BankAccount account, Scanner scanner, Object lock) {
         this.account = account;
-        this.amount = amount;
+        this.scanner = scanner;
+        this.lock = lock;
     }
 
     @Override
     public void run() {
         while (true) {
+            int amount;
+            synchronized (lock) {
+                System.out.print("Enter amount to withdraw: ");
+                amount = scanner.nextInt();
+            }
             account.withdraw(amount);
+
             try {
-                Thread.sleep(1500);
-            }catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
                 break;
             }
         }

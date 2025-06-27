@@ -1,19 +1,15 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-
-
-
-
-//        infinity loop
         BankAccount account = new BankAccount();
+        Scanner scanner = new Scanner(System.in);
+        Object lock = new Object();
 
-        Depositor depositor = new Depositor(account,1500);
-        Withdrawer withdrawer =new  Withdrawer(account,1600);
+        Depositor depositor = new Depositor(account, scanner, lock);
+        Withdrawer withdrawer = new Withdrawer(account, scanner, lock);
 
         depositor.start();
         withdrawer.start();
-
     }
 }
